@@ -11,7 +11,7 @@
             document.getElementById('loader').classList.remove('hidden');
         });
 
-         document.addEventListener('htmx:afterRequest', function (event) {
+        document.addEventListener('htmx:afterRequest', function (event) {
             document.getElementById('loader').classList.add('hidden');
             const resultElement = document.getElementById('result');
 
@@ -22,9 +22,10 @@
                 resultElement.innerHTML = responseContent;
             }
 
-            resultElement.scrollIntoView({ behavior: 'smooth' });
+            resultElement.scrollIntoView({behavior: 'smooth'});
         });
-         function clearForm() {
+
+        function clearForm() {
             document.getElementById('form').reset();
             document.getElementById('result').innerHTML = ''; // Clear the result section
         }
@@ -73,8 +74,14 @@
             </select>
         </div>
         <div class="flex space-x-4">
-            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-200">Predict</button>
-            <button type="button" onclick="clearForm()" class="w-full bg-gray-300 text-gray-700 font-bold py-2 rounded-lg hover:bg-gray-400 transition duration-200">Clear</button>
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                Predict
+            </button>
+            <button type="button" onclick="clearForm()"
+                    class="w-full bg-gray-300 text-gray-700 font-bold py-2 rounded-lg hover:bg-gray-400 transition duration-200">
+                Clear
+            </button>
         </div>
     </form>
 
