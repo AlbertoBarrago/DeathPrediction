@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Funny Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+    <script>
+        document.addEventListener('htmx:configRequest', function () {
+            document.getElementById('loader').classList.remove('hidden');
+        });
+
+        document.addEventListener('htmx:afterRequest', function () {
+            document.getElementById('loader').classList.add('hidden');
+            const resultElement = document.getElementById('result');
+            resultElement.scrollIntoView({behavior: 'smooth'});
+        });
+    </script>
+    <style>
+        .loader {
+            border-top-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="container mx-auto bg-white rounded-lg shadow-lg p-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-4">Funny Prediction</h1>
+    <p class="text-gray-700 text-center mb-6">Discover your funny destiny filling the form below:</p>
+
+    <div id="loader" class="hidden flex justify-center mb-4">
+        <div class="loader w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+
+    <form id="form" hx-post="/generate" hx-target="#result" hx-swap="innerHTML" class="space-y-4">
+        <div class="form-group">
+            <label for="name" class="block text-gray-600 font-semibold">Name</label>
+            <input type="text" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                   id="name" name="name" placeholder="Enter your name"/>
+
+            <label for="birthday" class="block text-gray-600 font-semibold mt-4">Year</label>
+            <input type="number" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                   name="birthday" id="birthday" placeholder="Birthday" required/>
+
+            <label for="current_year" class="block text-gray-600 font-semibold mt-4">Current Year</label>
+            <input type="number" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                   name="current_year" id="current_year" placeholder="Current Year" required/>
+
+            <label for="lucky_number" class="block text-gray-600 font-semibold mt-4">Lucky Number</label>
+            <input type="number" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                   name="lucky_number" id="lucky_number" placeholder="Lucky Number" required/>
+
+            <label for="language" class="block text-gray-600 font-semibold mt-4">Language</label>
+            <select class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300" name="language"
+                    id="language" required>
+                <option value="" disabled selected>Choose your language</option>
+                <option value="English">English</option>
+                <option value="French">French</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Italian">Italian</option>
+            </select>
+        </div>
+        <button type="submit"
+                class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+            Predict
+        </button>
+    </form>
+
+    <div id="result" class="mt-6"></div>
+</div>
+</body>
+</html>

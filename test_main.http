@@ -1,0 +1,12 @@
+# Test your FastAPI endpoints
+
+POST http://127.0.0.1:8000/generate
+Accept: application/json
+Content-Type: application/json
+
+{
+  "year": 1986,
+  "lucky_number": 7,
+  "language": "Italian"
+}
+
