@@ -28,14 +28,25 @@
             <label for="name" class="block text-gray-600 font-semibold">Name</label>
             <input type="text" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                    id="name" name="name" placeholder="Enter your name" required/>
+            <div class="grid grid-cols-2 space-x-4">
+                <div>
+                    <label for="birthday" class="block text-gray-600 font-semibold mt-4">Birthday Year</label>
+                    <input type="number"
+                           class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                           name="birthday" id="birthday" placeholder="Birthday Year" required/>
+                </div>
 
-            <label for="birthday" class="block text-gray-600 font-semibold mt-4">Birth Year</label>
-            <input type="number" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-                   name="birthday" id="birthday" placeholder="Birthday" required/>
+                <div>
+                    <label for="current_year" class="block text-gray-600 font-semibold mt-4">Current Year</label>
+                    <input type="number"
+                           class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                           name="current_year" id="current_year" placeholder="Current Year" required/>
+                </div>
+            </div>
 
-            <label for="current_year" class="block text-gray-600 font-semibold mt-4">Current Year</label>
-            <input type="number" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-                   name="current_year" id="current_year" placeholder="Current Year" required/>
+            <label for="profession" class="block text-gray-600 font-semibold mt-4">Profession</label>
+            <input class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+                   name="profession" id="profession" placeholder="Profession" required/>
 
             <label for="lucky_number" class="block text-gray-600 font-semibold mt-4">Lucky Number</label>
             <input type="number" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
@@ -61,7 +72,7 @@
                 Clear
             </button>
             <button id="downloadBtn"
-                    class="bg-green-500 text-white font-bold py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50">
+                    class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50">
                 Download
             </button>
         </div>

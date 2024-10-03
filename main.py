@@ -27,19 +27,25 @@ async def favicon():
     file_path = os.path.join(app.root_path, "static", file_name)
     return FileResponse(path=file_path, headers={"Content-Disposition": "attachment; filename=" + file_name})
 
+
 @dataclass
 class GenerateRequest(BaseModel):
     birthday: int = Form(...),
     current_year: int = Form(...),
     lucky_number: int = Form(...),
+    profession: str = Form(...),
     language: str = Form(...)
     name: str = Form(...)
 
+
 @app.post("/generate")
 async def predict(data: GenerateRequest = Form()):
-    prompt = (f"Generate a funny prediction for {data.name} someone's life from {data.birthday} to {data.current_year}, "
-              f"and their lucky number {data.lucky_number}, in {data.language}. Make it fun and lighthearted."
-              f"Don't use \n but markdown format")
+    prompt = (
+        f"Generate a funny prediction for {data.name} someone's life from {data.birthday} to {data.current_year},"
+        f"is job is {data.profession} and his language is {data.language}"
+        f"and their lucky number is {data.lucky_number}."
+        f"Make it fun and lighthearted."
+        f"Don't use \n but markdown format")
 
     # Use correct port 11234
     try:
