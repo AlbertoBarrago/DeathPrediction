@@ -11,11 +11,23 @@
             document.getElementById('loader').classList.remove('hidden');
         });
 
-        document.addEventListener('htmx:afterRequest', function () {
+         document.addEventListener('htmx:afterRequest', function (event) {
             document.getElementById('loader').classList.add('hidden');
             const resultElement = document.getElementById('result');
-            resultElement.scrollIntoView({behavior: 'smooth'});
+
+            const responseContent = event.detail.xhr.responseText.trim();
+            if (responseContent.startsWith('"') && responseContent.endsWith('"')) {
+                resultElement.innerHTML = responseContent.slice(1, -1);
+            } else {
+                resultElement.innerHTML = responseContent;
+            }
+
+            resultElement.scrollIntoView({ behavior: 'smooth' });
         });
+         function clearForm() {
+            document.getElementById('form').reset();
+            document.getElementById('result').innerHTML = ''; // Clear the result section
+        }
     </script>
     <style>
         .loader {
@@ -60,10 +72,10 @@
                 <option value="Italian">Italian</option>
             </select>
         </div>
-        <button type="submit"
-                class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-            Predict
-        </button>
+        <div class="flex space-x-4">
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-200">Predict</button>
+            <button type="button" onclick="clearForm()" class="w-full bg-gray-300 text-gray-700 font-bold py-2 rounded-lg hover:bg-gray-400 transition duration-200">Clear</button>
+        </div>
     </form>
 
     <div id="result" class="mt-6"></div>
