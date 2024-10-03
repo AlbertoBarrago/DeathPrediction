@@ -8,9 +8,13 @@ from fastapi.templating import Jinja2Templates
 from dataclasses import dataclass
 import markdown
 from starlette.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.get("/", response_class=HTMLResponse)
 async def read_index(request: Request):

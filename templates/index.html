@@ -6,30 +6,8 @@
     <title>Funny Prediction</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/htmx.org@2.0.2"></script>
-    <script>
-        document.addEventListener('htmx:configRequest', function () {
-            document.getElementById('loader').classList.remove('hidden');
-        });
-
-        document.addEventListener('htmx:afterRequest', function (event) {
-            document.getElementById('loader').classList.add('hidden');
-            const resultElement = document.getElementById('result');
-
-            const responseContent = event.detail.xhr.responseText.trim();
-            if (responseContent.startsWith('"') && responseContent.endsWith('"')) {
-                resultElement.innerHTML = responseContent.slice(1, -1);
-            } else {
-                resultElement.innerHTML = responseContent;
-            }
-
-            resultElement.scrollIntoView({behavior: 'smooth'});
-        });
-
-        function clearForm() {
-            document.getElementById('form').reset();
-            document.getElementById('result').innerHTML = ''; // Clear the result section
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="{{ url_for('static', path='/script.js') }}"></script>
     <style>
         .loader {
             border-top-color: transparent;
@@ -49,9 +27,9 @@
         <div class="form-group">
             <label for="name" class="block text-gray-600 font-semibold">Name</label>
             <input type="text" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-                   id="name" name="name" placeholder="Enter your name"/>
+                   id="name" name="name" placeholder="Enter your name" required/>
 
-            <label for="birthday" class="block text-gray-600 font-semibold mt-4">Year</label>
+            <label for="birthday" class="block text-gray-600 font-semibold mt-4">Birth Year</label>
             <input type="number" class="form-control w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
                    name="birthday" id="birthday" placeholder="Birthday" required/>
 
@@ -78,9 +56,13 @@
                     class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-200">
                 Predict
             </button>
-            <button type="button" onclick="clearForm()"
+            <button type="button" id="clearBtn"
                     class="w-full bg-gray-300 text-gray-700 font-bold py-2 rounded-lg hover:bg-gray-400 transition duration-200">
                 Clear
+            </button>
+            <button id="downloadBtn"
+                    class="bg-green-500 text-white font-bold py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50">
+                Download
             </button>
         </div>
     </form>
