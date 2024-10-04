@@ -1,18 +1,16 @@
 FROM python:3.10-slim
 
+RUN apt-get update && apt-get install -y gcc libffi-dev libssl-dev
+
 WORKDIR /app
 
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
-RUN pip install ollama && \
-    ollama --version
-
-which ollama
 
 COPY . /app
 
-RUN chmod +x /app/start.sh
+EXPOSE 8000
 
-EXPOSE 8000 11234
+RUN chmod +x /app/start.sh
 
 CMD ["/app/start.sh"]
