@@ -4,7 +4,10 @@ WORKDIR /app
 
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
-RUN pip install ollama
+RUN pip install ollama && \
+    ollama --version
+
+which ollama
 
 COPY . /app
 
