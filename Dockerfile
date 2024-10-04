@@ -1,16 +1,22 @@
-FROM python:3.10-slim
+# Fase 1: Builder
+FROM python:3.10-slim AS builder
 
-RUN apt-get update && apt-get install -y gcc libffi-dev libssl-dev
+RUN apt-get update && apt-get install -y curl tar supervisor && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+RUN curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama-linux-amd64.tgz \
+    && tar -C /usr -xzf ollama-linux-amd64.tgz \
+    && rm ollama-linux-amd64.tgz
 
 COPY requirements.txt /app/
-RUN pip install -r requirements.txt
+WORKDIR /app
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-EXPOSE 8000
-
 RUN chmod +x /app/start.sh
 
-CMD ["/app/start.sh"]
+EXPOSE 8000 11434
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord"]
