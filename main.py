@@ -30,9 +30,8 @@ async def favicon():
 
 @dataclass
 class GenerateRequest(BaseModel):
-    birthday: int = Form(...),
-    current_year: int = Form(...),
-    lucky_number: int = Form(...),
+    start_year: int = Form(...),
+    end_year: int = Form(...),
     profession: str = Form(...),
     language: str = Form(...)
     name: str = Form(...)
@@ -41,11 +40,12 @@ class GenerateRequest(BaseModel):
 @app.post("/generate")
 async def predict(data: GenerateRequest = Form()):
     prompt = (
-        f"Generate a funny prediction for {data.name} someone's life from {data.birthday} to {data.current_year},"
-        f"is job is {data.profession} and his language is {data.language}"
-        f"and their lucky number is {data.lucky_number}."
-        f"Make it fun and lighthearted."
-        f"Don't use \n but markdown format")
+        f"Generate a funny prediction for {data.name} about their life from {data.start_year} to {data.end_year}. "
+        f"Their job is {data.profession}. "
+        f"Write the prompt in {data.language}. "
+        f"Make it fun and lighthearted. "
+        f"Format it in markdown without using '\\n'."
+    )
 
     # Use correct port 11234
     try:
